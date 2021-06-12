@@ -2,6 +2,20 @@
 // light
 $bg-light-main: #f4f4f4;
 $bg-light-secondary: #f1f2eb;
+$light-font: #fff;
 // dark
 $bg-dark-main: #011627;
 $bg-dark-secondary: #181b23;
+$dark-font: #000;
+
+:root {
+  --bg-color: #{$bg-light-main};
+  --bg-accent-color: #{$bg-light-secondary};
+  --font-color: #{$dark-font};
+}
+
+.dark {
+  --bg-color: #{$bg-dark-main};
+  --bg-accent-color: #{$bg-dark-secondary};
+  --font-color: #{$light-font};
+}
