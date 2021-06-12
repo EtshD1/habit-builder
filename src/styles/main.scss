@@ -1,0 +1,17 @@
+@import "config";
+
+:root {
+  --bg-color: #{$bg-light-main};
+  --bg-accent-color: #{$bg-light-secondary};
+}
+
+.dark {
+  --bg-color: #{$bg-dark-main};
+  --bg-accent-color: #{$bg-dark-secondary};
+}
+
+.App {
+  height: 100vh;
+  width: 100vw;
+  background: var(--bg-accent-color);
+}
