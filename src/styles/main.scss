@@ -1,8 +1,12 @@
 @import "config";
+@import "navbar";
 
 .App {
   height: 100vh;
   width: 100vw;
   background: var(--bg-accent-color);
   color: var(--font-color);
+  font-family: Poppins;
 }
+
+@import "mobile";
