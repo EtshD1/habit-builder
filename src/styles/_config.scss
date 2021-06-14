@@ -1,21 +1,25 @@
-// colors
-// light
+// Colors
+// Light
 $bg-light-main: #f4f4f4;
 $bg-light-secondary: #f1f2eb;
-$light-font: #fff;
-// dark
+$dark-font: #000;
+$nav-light-bg: linear-gradient(90deg, #c1666b 0%, #c1666b 100%);
+// Dark
 $bg-dark-main: #011627;
 $bg-dark-secondary: #181b23;
-$dark-font: #000;
-
+$light-font: #fff;
+$nav-dark-bg: linear-gradient(90deg, #003049 0%, #233d4d 100%);
+// CSS Variables
 :root {
   --bg-color: #{$bg-light-main};
   --bg-accent-color: #{$bg-light-secondary};
   --font-color: #{$dark-font};
+  --nav-bg: #{$nav-light-bg};
 }
 
 .dark {
   --bg-color: #{$bg-dark-main};
   --bg-accent-color: #{$bg-dark-secondary};
   --font-color: #{$light-font};
+  --nav-bg: #{$nav-dark-bg};
 }
