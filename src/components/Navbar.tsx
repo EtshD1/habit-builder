@@ -14,7 +14,6 @@ const NavElements = () => {
   return (
     <li className="nav-elements">
       <ul>
-        <li>Category</li>
         <li>Theme</li>
         <li>Sign In</li>
       </ul>
@@ -41,7 +40,6 @@ const Sidebar = (props: { active: boolean; toggle: Function }) => {
       onClick={(e) => toggle()}
     >
       <ul onClick={(e) => e.stopPropagation()}>
-        <li>Category</li>
         <li>Theme</li>
         <li>Sign In</li>
       </ul>
