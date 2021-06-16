@@ -1,5 +1,6 @@
 @import "config";
 @import "navbar";
+@import "body";
 
 .App {
   height: 100vh;
@@ -7,6 +8,8 @@
   background: var(--bg-accent-color);
   color: var(--font-color);
   font-family: Poppins;
+  display: flex;
+  flex-direction: column;
 }
 
 @import "mobile";
