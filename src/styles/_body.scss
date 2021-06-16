@@ -12,20 +12,22 @@
   margin-top: 1.25rem;
 }
 
-.addBtn > div {
-  padding: 0.2rem;
-  border-radius: 100%;
-  background-color: var(--add-btn-border);
-  display: flex;
-  justify-content: center;
-  cursor: pointer;
-  align-items: center;
-}
+.addBtn {
+  > div {
+    padding: 0.2rem;
+    border-radius: 100%;
+    background-color: var(--add-btn-border);
+    display: flex;
+    justify-content: center;
+    cursor: pointer;
+    align-items: center;
+  }
 
-.addBtn > div > img {
-  padding: 1.5rem;
-  background-color: var(--add-btn-bg);
-  border-radius: 100%;
+  > div > img {
+    padding: 1.5rem;
+    background-color: var(--add-btn-bg);
+    border-radius: 100%;
+  }
 }
 
 .body {
