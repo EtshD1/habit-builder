@@ -1,0 +1,17 @@
+#formContainer {
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+  position: fixed;
+  justify-content: center;
+  align-items: center;
+  background-color: #82828280;
+
+  form > div {
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    width: 30rem;
+  }
+}
