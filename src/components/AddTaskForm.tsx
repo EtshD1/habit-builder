@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useState, useRef } from "react";
 import categories from "../categories";
 
@@ -101,7 +102,7 @@ const Field = ({
   );
 };
 
-const Form = () => {
+const Form = ({ close }: { close: Function }) => {
   const [formValues, setFormValues] = useState(intialFormValue);
   const [active, setActive] = useState(true);
 
@@ -112,6 +113,12 @@ const Form = () => {
   }) => {
     setFormValues((ps) => ({ ...ps, ...item }));
   };
+
+  useEffect(() => {
+    if (!active) {
+      setTimeout(() => close(), 300);
+    }
+  }, [active, close]);
 
   return (
     <div

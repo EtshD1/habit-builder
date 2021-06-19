@@ -16,6 +16,7 @@ const getTheme = () => {
 
 const App = () => {
   const [darkTheme, setDarkTheme] = useState(false);
+  const [form, showForm] = useState(false);
 
   useEffect(() => {
     setDarkTheme(getTheme());
@@ -35,8 +36,8 @@ const App = () => {
   return (
     <div className={`App ${darkTheme ? "dark" : ""}`}>
       <Navbar {...{ changeTheme }} />
-      <Body />
-      <Form />
+      <Body add={() => showForm(true)} />
+      {form ? <Form close={() => showForm(false)} /> : ""}
     </div>
   );
 };

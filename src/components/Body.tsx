@@ -1,9 +1,9 @@
 import plusIcon from "./images/plusIcon.svg";
 
-const Body = () => {
+const Body = ({ add }: { add: Function }) => {
   return (
     <div className="body">
-      <div className="addBtn">
+      <div className="addBtn" onClick={() => add()}>
         <div>
           <img src={plusIcon} alt="" />
         </div>
