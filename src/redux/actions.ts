@@ -1,11 +1,21 @@
-import { ActionType, dispatchTypes, habit } from "./type";
+import { HabitActionType, habitDispatches, habit, UserActionType, userDispatches } from "./type";
+import firebase from "firebase";
 
-export const addHabit = (newHabit: habit): ActionType => ({
-  type: dispatchTypes.ADD,
+export const addHabit = (newHabit: habit): HabitActionType => ({
+  type: habitDispatches.ADD,
   payload: newHabit
 });
 
-export const checkIn = (index: number): ActionType => ({
-  type: dispatchTypes.CHECKIN,
+export const checkIn = (index: number): HabitActionType => ({
+  type: habitDispatches.CHECKIN,
   payload: index
 });
+
+export const login = (user: firebase.User): UserActionType => ({
+  type: userDispatches.LOGIN,
+  payload: user
+});
+
+export const logout = ():UserActionType => ({
+  type: userDispatches.LOGOUT
+})

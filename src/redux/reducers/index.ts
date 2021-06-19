@@ -1,10 +1,12 @@
-import { habit, ActionType, dispatchTypes } from "../type";
+import { habit, HabitActionType, habitDispatches, userDispatches, UserActionType } from "../type";
+import firebase from "firebase";
+import { combineReducers} from 'redux';
 
-const habitReducer = (state: Array<habit> = [], action: ActionType) => {
+const habitsReducer = (state: Array<habit> = [], action: HabitActionType) => {
   switch (action.type) {
-    case dispatchTypes.ADD:
+    case habitDispatches.ADD:
       return [...state, action.payload];
-    case dispatchTypes.CHECKIN:
+    case habitDispatches.CHECKIN:
       const newState = [...state];
       if (typeof action.payload == "number") {
         const today = new Date();
@@ -18,7 +20,27 @@ const habitReducer = (state: Array<habit> = [], action: ActionType) => {
       }
       return newState;
   }
-
+  return state;
 }
 
-export default habitReducer;
+const userReducer = (state:firebase.User| null| undefined, action: UserActionType) => {
+  switch (action.type) {
+    case userDispatches.LOGIN:
+      return action.payload;
+    case userDispatches.LOGOUT:
+      return null;
+  }
+  return state;
+}
+
+const allReducers = combineReducers({
+  user: userReducer,
+  habits: habitsReducer
+});
+
+export default allReducers;
+
+export type store = {
+  user:firebase.User| null| undefined,
+  habits: Array<habit> 
+}

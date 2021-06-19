@@ -1,3 +1,5 @@
+import firebase from "firebase"
+
 export type habit = {
   title: string,
   description: string,
@@ -11,12 +13,22 @@ export type dateOfCompletion = {
   year: number
 }
 
-export type ActionType = {
+export type HabitActionType = {
   type: string,
   payload?: habit | number,
 }
 
-export const dispatchTypes = {
+export type UserActionType = {
+  type: string,
+  payload?: firebase.User,
+}
+
+export const habitDispatches = {
   ADD: "ADD",
   CHECKIN: "CHECKIN"
+}
+
+export const userDispatches = {
+  LOGIN: "LOGIN",
+  LOGOUT: "LOGOUT"
 }
