@@ -40,7 +40,7 @@ const allReducers = combineReducers({
 
 export default allReducers;
 
-export type store = {
+export type storeType = {
   user:firebase.User| null| undefined,
   habits: Array<habit> 
 }
