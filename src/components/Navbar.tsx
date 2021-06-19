@@ -10,11 +10,11 @@ const Logo = () => {
   );
 };
 
-const NavElements = () => {
+const NavElements = ({ changeTheme }: { changeTheme: Function }) => {
   return (
     <li className="nav-elements">
       <ul>
-        <li>Theme</li>
+        <li onClick={() => changeTheme()}>Theme</li>
         <li>Sign In</li>
       </ul>
     </li>
@@ -47,7 +47,7 @@ const Sidebar = (props: { active: boolean; toggle: Function }) => {
   );
 };
 
-const Navbar = () => {
+const Navbar = ({ changeTheme }: { changeTheme: Function }) => {
   const [sidebarActive, setSidebarActive] = useState(false);
 
   const toggleSidebar = () => setSidebarActive((ps) => !ps);
@@ -58,7 +58,7 @@ const Navbar = () => {
         <nav>
           <ul>
             <Logo />
-            <NavElements />
+            <NavElements {...{ changeTheme }} />
             <Burger toggle={toggleSidebar} />
           </ul>
         </nav>
