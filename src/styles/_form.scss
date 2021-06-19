@@ -1,12 +1,22 @@
+#formContainer.active {
+  animation: appear 0.3s forwards;
+  pointer-events: auto;
+  cursor: pointer;
+
+  form > div {
+    animation: fallin 0.5s forwards;
+  }
+}
+
 #formContainer {
   display: flex;
   height: 100vh;
   width: 100vw;
   position: fixed;
+  pointer-events: none;
   justify-content: center;
   align-items: center;
-  background-color: #82828280;
-  cursor: pointer;
+  animation: disappear 0.3s forwards;
 
   form > div {
     background-color: var(--bg-color);
@@ -18,6 +28,7 @@
     padding: 2rem;
     border-radius: 0.625rem;
     box-shadow: -3px 4px 18px 12px rgba(0, 0, 0, 0.25);
+    animation: levitate 0.5s forwards;
   }
 
   .title {
@@ -120,5 +131,43 @@
 
   .arrow svg path {
     fill: var(--font-color);
+  }
+}
+
+@keyframes appear {
+  from {
+    background-color: #82828200;
+  }
+
+  to {
+    background-color: #82828280;
+  }
+}
+
+@keyframes fallin {
+  from {
+    transform: translateY(-100vh);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+@keyframes disappear {
+  from {
+    background-color: #82828280;
+  }
+
+  to {
+    background-color: #82828200;
+  }
+}
+
+@keyframes levitate {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(-100vh);
   }
 }

@@ -103,6 +103,7 @@ const Field = ({
 
 const Form = () => {
   const [formValues, setFormValues] = useState(intialFormValue);
+  const [active, setActive] = useState(true);
 
   const controlledSetState = (item: {
     title?: string;
@@ -113,7 +114,11 @@ const Form = () => {
   };
 
   return (
-    <div id="formContainer">
+    <div
+      id="formContainer"
+      className={active ? "active" : ""}
+      onClick={() => setActive(false)}
+    >
       <div>
         <form onSubmit={(e) => e.preventDefault()}>
           <div>
@@ -135,6 +140,10 @@ const Form = () => {
               value={formValues.category}
               setValue={(category: string) => controlledSetState({ category })}
             />
+            <div className="submission">
+              <div>Cancel</div>
+              <div>Save</div>
+            </div>
           </div>
         </form>
       </div>
