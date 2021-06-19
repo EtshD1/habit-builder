@@ -1,5 +1,5 @@
-import { useCallback } from "react";
 import { useState, useRef } from "react";
+import categories from "../categories";
 
 type habitValues = {
   title: string;
@@ -24,12 +24,6 @@ const Dropdown = ({
   const ul = useRef<HTMLUListElement>(null);
 
   const [active, setActive] = useState(false);
-
-  const categories = [
-    { name: "Health", color: "#5B965E" },
-    { name: "Hobby", color: "#4357AD" },
-    { name: "Productivity", color: "#B80C09" },
-  ];
 
   const chosen = categories.find((i) => i.name === value);
 
@@ -84,6 +78,29 @@ const Dropdown = ({
   );
 };
 
+const Field = ({
+  value,
+  setValue,
+  className,
+  placeholder,
+}: {
+  value: string;
+  setValue: Function;
+  className: string;
+  placeholder: string;
+}) => {
+  return (
+    <>
+      <input
+        type="text"
+        onChange={(e) => setValue(e.target.value)}
+        {...{ value, className, placeholder }}
+      />
+      <div className="hr"></div>
+    </>
+  );
+};
+
 const Form = () => {
   const [formValues, setFormValues] = useState(intialFormValue);
 
@@ -100,24 +117,20 @@ const Form = () => {
       <div>
         <form onSubmit={(e) => e.preventDefault()}>
           <div>
-            <input
+            <Field
               className="title"
-              type="text"
               placeholder="Title"
-              onChange={(e) => controlledSetState({ title: e.target.value })}
               value={formValues.title}
+              setValue={(value: string) => controlledSetState({ title: value })}
             />
-            <div className="hr"></div>
-            <input
+            <Field
               className="description"
-              type="text"
               placeholder="Description"
-              onChange={(e) =>
-                controlledSetState({ description: e.target.value })
-              }
               value={formValues.description}
+              setValue={(value: string) =>
+                controlledSetState({ description: value })
+              }
             />
-            <div className="hr"></div>
             <Dropdown
               value={formValues.category}
               setValue={(category: string) => controlledSetState({ category })}
