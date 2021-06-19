@@ -6,12 +6,119 @@
   justify-content: center;
   align-items: center;
   background-color: #82828280;
+  cursor: pointer;
 
   form > div {
-    background-color: #fff;
+    background-color: var(--bg-color);
+    cursor: auto;
     display: flex;
     flex-direction: column;
     align-items: flex-end;
-    width: 30rem;
+    width: 32rem;
+    padding: 2rem;
+    border-radius: 0.625rem;
+    box-shadow: -3px 4px 18px 12px rgba(0, 0, 0, 0.25);
+  }
+
+  .title {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: var(--font-color);
+  }
+  .description {
+    font-size: 1.5rem;
+    color: var(--font-color);
+  }
+
+  .title,
+  .description {
+    width: 100%;
+    padding-bottom: 0.5rem;
+    background: none;
+    border: none;
+  }
+
+  .hr {
+    width: 100%;
+    background-color: var(--input-hr);
+    min-height: 1px;
+    box-shadow: 0 1px 5px var(--shadow-color);
+    margin-bottom: 1.25rem;
+    box-sizing: content-box;
+  }
+
+  .dropdownContainer {
+    margin: 1rem 0;
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .dropdownBtn {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem 1.25rem;
+    font-size: 1.5rem;
+    border: 2px solid var(--font-color);
+    border-radius: 0.5rem;
+    cursor: pointer;
+    background: none;
+    color: var(--font-color);
+    position: relative;
+    z-index: 2;
+  }
+
+  .dropdownBtn .arrow {
+    padding-left: 1.25rem;
+  }
+
+  .dropdownBtn .arrow svg {
+    transition: 0.4s ease;
+    transform: rotate(0deg);
+  }
+
+  .dropdownContainer.active .dropdownBtn .arrow svg {
+    transform: rotate(180deg);
+  }
+
+  ul.dropdownList {
+    position: relative;
+    padding: 0.5rem;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 8rem;
+    opacity: 0;
+    transform: translateY(-1.5rem);
+    transition: transform 0.5s ease, opacity 0.3s ease;
+    background: var(--bg-color);
+    z-index: 1;
+    box-shadow: 0px 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border: 1px solid var(--border-drop);
+  }
+
+  ul.dropdownList > li {
+    display: flex;
+    font-size: 1.5rem;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    pointer-events: auto;
+    cursor: default;
+  }
+
+  .active ul.dropdownList > li {
+    cursor: pointer;
+  }
+
+  .dropdownContainer.active ul.dropdownList {
+    opacity: 1;
+    transform: translateY(0.5rem);
+  }
+
+  .arrow svg path {
+    fill: var(--font-color);
   }
 }
