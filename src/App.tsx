@@ -4,6 +4,7 @@ import "./styles/reset.css";
 import Navbar from "./components/Navbar";
 import Body from "./components/Body";
 import Form from "./components/AddTaskForm";
+import Authenticate from "./components/Authenticate";
 
 import { useState, useEffect } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
@@ -13,6 +14,8 @@ import firebase from "firebase/app";
 import "firebase/firestore";
 import "firebase/auth";
 import "firebase/analytics";
+
+import Context from "./Context";
 
 firebase.initializeApp(config);
 
@@ -28,13 +31,6 @@ const getTheme = () => {
   return window.matchMedia("(prefers-color-scheme: dark)").matches;
 };
 
-const signIn = () => {
-  const provider = new firebase.auth.GoogleAuthProvider();
-  auth.signInWithPopup(provider);
-};
-
-const signOut = () => auth.signOut();
-
 const App = () => {
   const [darkTheme, setDarkTheme] = useState(false);
   const [form, showForm] = useState(false);
@@ -45,6 +41,16 @@ const App = () => {
   useEffect(() => {
     setDarkTheme(getTheme());
   }, []);
+
+  const signIn = async () => {
+    const provider = new firebase.auth.GoogleAuthProvider();
+    const user = await auth.signInWithPopup(provider);
+    console.log(user);
+  };
+
+  const signOut = () => {
+    auth.signOut();
+  };
 
   const changeTheme = () => {
     setDarkTheme((ps) => {
@@ -58,17 +64,19 @@ const App = () => {
   };
 
   return (
-    <div className={`App ${darkTheme ? "dark" : ""}`}>
-      <Navbar {...{ changeTheme }} />
-      {user ? (
-        <Body add={() => showForm(true)} />
-      ) : (
-        <div id="signInBody">
-          <div>Sign In</div>
-        </div>
-      )}
-      {form ? <Form close={() => showForm(false)} /> : ""}
-    </div>
+    <Context.Provider value={{ signIn, signOut }}>
+      <div className={`App ${darkTheme ? "dark" : ""}`}>
+        <Navbar {...{ changeTheme }} />
+        {user ? (
+          <Body add={() => showForm(true)} />
+        ) : (
+          <div id="signInBody">
+            <Authenticate />
+          </div>
+        )}
+        {form ? <Form close={() => showForm(false)} /> : ""}
+      </div>
+    </Context.Provider>
   );
 };
 
