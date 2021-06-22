@@ -1,4 +1,7 @@
 import { MouseEventHandler, useState } from "react";
+import { useSelector } from "react-redux";
+import { storeType } from "../redux/reducers";
+import Authenticate from "./Authenticate";
 
 type toggleFunction = MouseEventHandler<HTMLLIElement>;
 
@@ -11,11 +14,22 @@ const Logo = () => {
 };
 
 const NavElements = ({ changeTheme }: { changeTheme: Function }) => {
+  const user = useSelector((state: storeType) => state.user);
   return (
     <li className="nav-elements">
       <ul>
         <li onClick={() => changeTheme()}>Theme</li>
-        <li>Sign In</li>
+        <li className={`userArea ${user ? "loggedIn" : ""}`}>
+          {user ? (
+            <div>
+              <div className="welcome">Hello,</div>{" "}
+              <div className="username">{user.displayName}</div>
+            </div>
+          ) : (
+            ""
+          )}
+          <Authenticate />
+        </li>
       </ul>
     </li>
   );
@@ -31,8 +45,12 @@ const Burger = ({ toggle }: { toggle: toggleFunction }) => {
   );
 };
 
-const Sidebar = (props: { active: boolean; toggle: Function }) => {
-  const { active, toggle } = props;
+const Sidebar = (props: {
+  active: boolean;
+  toggle: Function;
+  changeTheme: Function;
+}) => {
+  const { active, toggle, changeTheme } = props;
   return (
     <div
       id="sidebar"
@@ -40,8 +58,8 @@ const Sidebar = (props: { active: boolean; toggle: Function }) => {
       onClick={(e) => toggle()}
     >
       <ul onClick={(e) => e.stopPropagation()}>
-        <li>Theme</li>
-        <li>Sign In</li>
+        <li onClick={() => changeTheme()}>Theme</li>
+        <Authenticate />
       </ul>
     </div>
   );
@@ -63,7 +81,11 @@ const Navbar = ({ changeTheme }: { changeTheme: Function }) => {
           </ul>
         </nav>
       </header>
-      <Sidebar active={sidebarActive} toggle={toggleSidebar} />
+      <Sidebar
+        active={sidebarActive}
+        toggle={toggleSidebar}
+        {...{ changeTheme }}
+      />
     </>
   );
 };

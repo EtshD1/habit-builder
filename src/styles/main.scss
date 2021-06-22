@@ -20,8 +20,75 @@
   height: 100%;
 }
 
+#sidebar .login {
+  font-size: 1.75rem;
+}
+
+.login {
+  border-radius: 10rem;
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem 1.5rem;
+  font-weight: normal;
+  background-color: #fff;
+  box-shadow: 0px 0px 5px 5px rgba(0, 0, 0, 0.2);
+  font-size: 1.1rem;
+  color: #898989;
+  border: 2px solid #898989;
+  cursor: pointer;
+
+  img {
+    padding-right: 1.25rem;
+  }
+}
+
+.logout {
+  cursor: pointer;
+}
+
+.logout svg path:last-child {
+  stroke: var(--font-color);
+}
+
+.logout svg .arrow {
+  fill: var(--font-color);
+}
+
+.logout:hover svg .arrow {
+  animation: draw2 2s forwards ease;
+  fill: #bf1363;
+}
+
+.logout:hover svg path {
+  stroke-dasharray: 98;
+  animation: draw 1s forwards ease;
+  stroke: #bf1363;
+}
+
 * {
   transition: color ease 0.6s, background-color ease 0.4s;
+}
+
+@keyframes draw {
+  from {
+    stroke-dashoffset: 98;
+  }
+
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes draw2 {
+  0% {
+    opacity: 0;
+    transform: translateX(-50%);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
 
 @import "mobile";

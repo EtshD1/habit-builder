@@ -27,9 +27,28 @@
     user-select: none;
   }
 
+  .loggedIn.userArea {
+    justify-content: space-between;
+  }
+
+  .welcome {
+    font-size: 0.8rem;
+    font-weight: normal;
+  }
+
+  .username {
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+
   .nav-elements {
     flex-grow: 1;
     font-size: 1.1rem;
+
+    .login {
+      font-size: 1.1rem;
+      width: 10rem;
+    }
 
     ul {
       flex-grow: 1;
@@ -40,6 +59,13 @@
     font-size: 2.5rem;
     font-weight: bold;
     flex-grow: 3;
+  }
+
+  .userArea {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 15rem;
   }
 
   li {

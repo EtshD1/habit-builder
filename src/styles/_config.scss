@@ -8,6 +8,7 @@ $add-btn-light: #35ff69;
 $add-btn-light-border: #33ff6680;
 $input-light-hr: #00000080;
 $shadow-light: rgba(0, 0, 0, 0.25);
+$sidebar-font-light: #535353;
 // Dark Theme
 $bg-dark-main: #011627;
 $bg-dark-secondary: #181b23;
@@ -17,6 +18,7 @@ $add-btn-dark: #386641;
 $add-btn-dark-border: #38664180;
 $input-dark-hr: #ffffff80;
 $shadow-dark: rgba(255, 255, 255, 0.25);
+$sidebar-font-dark: #dadada;
 // CSS Variables
 :root {
   --bg-color: #{$bg-light-main};
@@ -28,6 +30,7 @@ $shadow-dark: rgba(255, 255, 255, 0.25);
   --input-hr: #{$input-light-hr};
   --shadow-color: #{$shadow-light};
   --border-drop: #{$bg-light-main};
+  --sidebar-font: #{$sidebar-font-light};
 }
 
 .dark {
@@ -40,4 +43,5 @@ $shadow-dark: rgba(255, 255, 255, 0.25);
   --input-hr: #{$input-dark-hr};
   --shadow-color: #{$shadow-dark};
   --border-drop: #000;
+  --sidebar-font: #{$sidebar-font-dark};
 }

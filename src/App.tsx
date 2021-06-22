@@ -1,26 +1,28 @@
 import "./styles/main.scss";
 import "./styles/reset.css";
 
+import "firebase/firestore";
+import "firebase/auth";
+import "firebase/analytics";
+import config from "./firebase.json";
+import firebase from "firebase/app";
+
 import Navbar from "./components/Navbar";
 import Body from "./components/Body";
 import Form from "./components/AddTaskForm";
 import Authenticate from "./components/Authenticate";
 
+import { login, logout } from "./redux/actions";
 import { useState, useEffect } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
-
-import config from "./firebase.json";
-import firebase from "firebase/app";
-import "firebase/firestore";
-import "firebase/auth";
-import "firebase/analytics";
+import { useDispatch } from "react-redux";
 
 import Context from "./Context";
 
 firebase.initializeApp(config);
 
 const auth = firebase.auth();
-const firestore = firebase.firestore();
+// const firestore = firebase.firestore();
 
 const getTheme = () => {
   const value = window.localStorage.getItem("theme");
@@ -35,12 +37,21 @@ const App = () => {
   const [darkTheme, setDarkTheme] = useState(false);
   const [form, showForm] = useState(false);
 
+  const dispatcher = useDispatch();
+
   const [user] = useAuthState(auth);
-  console.log(user);
 
   useEffect(() => {
     setDarkTheme(getTheme());
   }, []);
+
+  useEffect(() => {
+    if (user) {
+      dispatcher(login(user));
+    } else {
+      dispatcher(logout());
+    }
+  }, [user, dispatcher]);
 
   const signIn = async () => {
     const provider = new firebase.auth.GoogleAuthProvider();

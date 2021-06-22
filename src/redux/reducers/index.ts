@@ -23,7 +23,7 @@ const habitsReducer = (state: Array<habit> = [], action: HabitActionType) => {
   return state;
 }
 
-const userReducer = (state:firebase.User| null| undefined, action: UserActionType) => {
+const userReducer = (state:firebase.User| null = null, action: UserActionType) => {
   switch (action.type) {
     case userDispatches.LOGIN:
       return action.payload;
