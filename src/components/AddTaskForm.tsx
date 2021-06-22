@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import { useState, useRef } from "react";
 import categories from "../categories";
 
@@ -17,9 +17,11 @@ const intialFormValue: habitValues = {
 const Dropdown = ({
   value,
   setValue,
+  warning,
 }: {
   value: string;
   setValue: Function;
+  warning: string;
 }) => {
   const btn = useRef<HTMLButtonElement>(null);
   const ul = useRef<HTMLUListElement>(null);
@@ -33,11 +35,21 @@ const Dropdown = ({
   };
 
   return (
-    <div className={`dropdownContainer ${active ? "active" : ""}`}>
+    <div
+      className={`dropdownContainer ${active ? "active" : ""} ${
+        warning ? "warn" : ""
+      }`}
+    >
+      <div className="warningContainer">
+        <div className="warningMsg">{warning}</div>
+      </div>
       <div>
         <button
           onBlur={blur}
-          onClick={() => (active ? btn.current?.blur() : setActive(true))}
+          onClick={(e) => {
+            e.preventDefault();
+            active ? btn.current?.blur() : setActive(true);
+          }}
           ref={btn}
           className="dropdownBtn"
         >
@@ -84,26 +96,32 @@ const Field = ({
   setValue,
   className,
   placeholder,
+  warning,
 }: {
   value: string;
   setValue: Function;
   className: string;
   placeholder: string;
+  warning: string;
 }) => {
   return (
-    <>
+    <div className={`field ${warning ? "warn" : ""}`}>
+      <div className="warningContainer">
+        <div className="warningMsg">{warning}</div>
+      </div>
       <input
         type="text"
         onChange={(e) => setValue(e.target.value)}
         {...{ value, className, placeholder }}
       />
       <div className="hr"></div>
-    </>
+    </div>
   );
 };
 
 const Form = ({ close }: { close: Function }) => {
-  const [formValues, setFormValues] = useState(intialFormValue);
+  const [values, setValues] = useState(intialFormValue);
+  const [warnings, setWarnings] = useState(intialFormValue);
   const [active, setActive] = useState(true);
 
   const controlledSetState = (item: {
@@ -111,7 +129,30 @@ const Form = ({ close }: { close: Function }) => {
     description?: string;
     category?: string;
   }) => {
-    setFormValues((ps) => ({ ...ps, ...item }));
+    setValues((ps) => ({ ...ps, ...item }));
+  };
+
+  const submit: React.FormEventHandler = (e) => {
+    e.preventDefault();
+    let submittable = true;
+    if (values.title === "") {
+      setWarnings((ps) => ({ ...ps, title: "Please Enter a Title" }));
+      submittable = false;
+    }
+    if (values.description === "") {
+      setWarnings((ps) => ({
+        ...ps,
+        description: "Please Enter a Description",
+      }));
+      submittable = false;
+    }
+    if (values.category === "") {
+      setWarnings((ps) => ({ ...ps, category: "Please Select a Category" }));
+      submittable = false;
+    }
+    if (submittable) {
+      console.log(values);
+    }
   };
 
   useEffect(() => {
@@ -126,30 +167,40 @@ const Form = ({ close }: { close: Function }) => {
       className={active ? "active" : ""}
       onClick={() => setActive(false)}
     >
-      <div>
-        <form onSubmit={(e) => e.preventDefault()}>
+      <div onClick={(e) => e.stopPropagation()}>
+        <form onSubmit={submit}>
           <div>
             <Field
               className="title"
               placeholder="Title"
-              value={formValues.title}
-              setValue={(value: string) => controlledSetState({ title: value })}
+              value={values.title}
+              warning={warnings.title}
+              setValue={(title: string) => {
+                controlledSetState({ title });
+                setWarnings((ps) => ({ ...ps, title: "" }));
+              }}
             />
             <Field
               className="description"
               placeholder="Description"
-              value={formValues.description}
-              setValue={(value: string) =>
-                controlledSetState({ description: value })
-              }
+              value={values.description}
+              warning={warnings.description}
+              setValue={(description: string) => {
+                controlledSetState({ description });
+                setWarnings((ps) => ({ ...ps, description: "" }));
+              }}
             />
             <Dropdown
-              value={formValues.category}
-              setValue={(category: string) => controlledSetState({ category })}
+              warning={warnings.category}
+              value={values.category}
+              setValue={(category: string) => {
+                controlledSetState({ category });
+                setWarnings((ps) => ({ ...ps, category: "" }));
+              }}
             />
             <div className="submission">
-              <div>Cancel</div>
-              <div>Save</div>
+              <button onClick={() => setActive(false)}>Cancel</button>
+              <input type="submit" value="Save" />
             </div>
           </div>
         </form>
