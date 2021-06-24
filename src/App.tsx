@@ -17,7 +17,7 @@ import { useState, useEffect } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useDispatch } from "react-redux";
 
-import Context from "./Context";
+import Context from "./context";
 
 firebase.initializeApp(config);
 
