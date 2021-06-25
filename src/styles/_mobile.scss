@@ -72,4 +72,15 @@
   #sidebar ul > li {
     cursor: pointer;
   }
+
+  #formContainer > div > form > div {
+    width: 100vw;
+    border-bottom-right-radius: 0;
+    height: 80vh;
+    border-bottom-left-radius: 0;
+  }
+
+  #formContainer {
+    align-items: flex-end;
+  }
 }
