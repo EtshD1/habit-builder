@@ -3,7 +3,7 @@
   cursor: pointer;
 
   form > div {
-    animation: fallin 0.5s forwards;
+    animation: lift 0.5s forwards;
   }
 }
 
@@ -26,7 +26,7 @@
     padding: 2rem;
     border-radius: 0.625rem;
     box-shadow: -3px 4px 18px 12px rgba(0, 0, 0, 0.25);
-    animation: levitate 0.5s forwards;
+    animation: fall 0.5s forwards;
   }
 
   .title {
@@ -211,9 +211,9 @@
   }
 }
 
-@keyframes fallin {
+@keyframes lift {
   from {
-    transform: translateY(-100vh);
+    transform: translateY(100vh);
   }
   to {
     transform: translateY(0);
@@ -230,11 +230,11 @@
   }
 }
 
-@keyframes levitate {
+@keyframes fall {
   from {
     transform: translateY(0);
   }
   to {
-    transform: translateY(-100vh);
+    transform: translateY(100vh);
   }
 }
