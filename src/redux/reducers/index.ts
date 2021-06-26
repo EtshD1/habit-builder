@@ -5,7 +5,14 @@ import { combineReducers} from 'redux';
 const habitsReducer = (state: Array<habit> = [], action: HabitActionType) => {
   switch (action.type) {
     case habitDispatches.ADD:
-      return [...state, action.payload];
+      if (typeof action.payload === "object") {
+        const id = action.payload.id;
+        const found = state.find(i=>  i.id === id);
+        if (!found) {
+          return [...state, action.payload];
+        }
+      } else console.warn("Payload supplied incorrectly\n")
+      return [...state];
     case habitDispatches.CHECKIN:
       const newState = [...state];
       if (typeof action.payload == "number") {
@@ -16,7 +23,7 @@ const habitsReducer = (state: Array<habit> = [], action: HabitActionType) => {
           year: today.getFullYear()
         });
       } else {
-        throw new Error("Payload supplied incorrectly\n");
+        console.warn("Payload supplied incorrectly\n");
       }
       return newState;
   }

@@ -1,6 +1,7 @@
 import firebase from "firebase"
 
 export type habit = {
+  id: string,
   title: string,
   description: string,
   completed: Array<dateOfCompletion>,
