@@ -57,6 +57,14 @@
       pointer-events: none;
       cursor: auto;
     }
+
+    .logout svg path:last-child {
+      stroke: var(--font-color);
+    }
+    
+    .logout svg .arrow {
+      fill: var(--font-color);
+    }
   }
 
   #sidebar.active {
@@ -82,5 +90,33 @@
 
   #formContainer {
     align-items: flex-end;
+  }
+
+  .body {
+    .habit {
+      border-radius: 0;
+      border-left: 0;
+      border-right: 0;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      padding: 0.5rem 2rem;
+      height: auto;
+
+      .track {
+        div.checkIn {
+          display: none;
+        }
+
+        .mobileCheck {
+          display: block;
+          cursor: pointer;
+        }
+      }
+
+      .title {
+        width: 100%;
+        align-items: flex-start;
+      }
+    }
   }
 }
