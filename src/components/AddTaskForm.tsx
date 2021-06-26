@@ -1,6 +1,10 @@
 import React, { useEffect } from "react";
 import { useState, useRef } from "react";
 import categories from "../categories";
+import firebase from 'firebase/app';
+import { useMemo } from "react";
+import { useSelector } from "react-redux";
+import { storeType } from '../redux/reducers';
 
 type habitValues = {
   title: string;
@@ -36,9 +40,8 @@ const Dropdown = ({
 
   return (
     <div
-      className={`dropdownContainer ${active ? "active" : ""} ${
-        warning ? "warn" : ""
-      }`}
+      className={`dropdownContainer ${active ? "active" : ""} ${warning ? "warn" : ""
+        }`}
     >
       <div className="warningContainer">
         <div className="warningMsg">{warning}</div>
@@ -124,6 +127,10 @@ const Form = ({ close }: { close: Function }) => {
   const [warnings, setWarnings] = useState(intialFormValue);
   const [active, setActive] = useState(true);
 
+  const user = useSelector((state: storeType) => state.user);
+
+  const db = useMemo(() => firebase.firestore(), []);
+
   const controlledSetState = (item: {
     title?: string;
     description?: string;
@@ -132,7 +139,7 @@ const Form = ({ close }: { close: Function }) => {
     setValues((ps) => ({ ...ps, ...item }));
   };
 
-  const submit: React.FormEventHandler = (e) => {
+  const submit: React.FormEventHandler = async (e) => {
     e.preventDefault();
     let submittable = true;
     if (values.title === "") {
@@ -151,7 +158,11 @@ const Form = ({ close }: { close: Function }) => {
       submittable = false;
     }
     if (submittable) {
-      console.log(values);
+      const { serverTimestamp } = firebase.firestore.FieldValue;
+      await db.collection("habits").add(
+        { ...values, createdAt: serverTimestamp(), uid: user?.uid, completed: [] }
+      );
+      setActive(false);
     }
   };
 
