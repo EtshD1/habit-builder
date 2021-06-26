@@ -64,10 +64,17 @@ const Habit = (props: { title: string, description: string, category: string, co
 
   }
 
+  const deleteDoc = () => {
+    docRef.delete();
+  }
+
   return (<div className="habit">
     <div className="title" style={{ color }}>
       <div>
-        <h3>{title}</h3>
+        <div className="mainInfo">
+          <h3>{title}</h3>
+          <button onClick={deleteDoc} className="deleteBtn">Remove</button>
+        </div>
         <p>{description}</p>
       </div>
     </div>
