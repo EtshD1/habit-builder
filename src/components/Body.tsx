@@ -33,8 +33,10 @@ const getWeekDates = () => {
   return weekDates;
 }
 
-const Habit = (props: { title: string, description: string, category: string, completed: Array<dateOfCompletion> }) => {
-  const { title, description, category, completed } = props;
+const Habit = (props: { title: string, description: string, category: string, completed: Array<dateOfCompletion>, id: string }) => {
+  const { title, description, category, completed, id } = props;
+
+  const docRef = firebase.firestore().collection("habits").doc(id);
 
   const weekDates = getWeekDates();
 
@@ -48,6 +50,18 @@ const Habit = (props: { title: string, description: string, category: string, co
       return true;
     }
     return false;
+  }
+
+  const complete = () => {
+    const today = new Date();
+    docRef.update({
+      completed: firebase.firestore.FieldValue.arrayUnion({
+        day: today.getDate(),
+        month: today.getMonth(),
+        year: today.getFullYear()
+      })
+    });
+
   }
 
   return (<div className="habit">
@@ -82,12 +96,12 @@ const Habit = (props: { title: string, description: string, category: string, co
           })}
         </div>
       </div>
-      {isCompleted() ? <div className="taskDone" style={{ color }}><div>Great</div><div>Job!</div></div> : <><div className="checkIn" style={{ backgroundColor: color }}>
+      {isCompleted() ? <div className="taskDone" style={{ color }}><div>Great</div><div>Job!</div></div> : <><div onClick={e => complete()} className="checkIn" style={{ backgroundColor: color }}>
         <svg className="desktopCheck" width="50" height="44" viewBox="0 0 50 44" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M3 24.2L17.6667 39L47 2" stroke="#F4F4F4" strokeWidth="6" />
         </svg>
       </div>
-        <div className="mobileCheck">
+        <div onClick={e => complete()} className="mobileCheck">
           <svg width="60" height="60" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
             <rect x="0.5" y="0.5" width="59" height="59" rx="29.5" fill={color} stroke="black" />
             <mask id="mask0" mask-type="alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="60" height="60">
@@ -135,7 +149,7 @@ const Body = ({ add }: { add: Function }) => {
   return (
     <div className="body">
       {habits.map((h => {
-        return <Habit title={h.title} description={h.description} category={h.category} completed={h.completed} key={h.id} />
+        return <Habit id={h.id} title={h.title} description={h.description} category={h.category} completed={h.completed} key={h.id} />
       }))}
       <div className="addBtn">
         <div onClick={() => add()}>
