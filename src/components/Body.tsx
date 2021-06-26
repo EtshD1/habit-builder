@@ -40,6 +40,16 @@ const Habit = (props: { title: string, description: string, category: string, co
 
   const color = categories.find(i => i.name === category)?.color;
 
+  const isCompleted = () => {
+    const today = new Date();
+    const weekToday = weekDates[today.getDay()];
+    const foundDay = completed.find(d => (d.day === weekToday.day && d.month === weekToday.month && d.year === weekToday.year))
+    if (foundDay) {
+      return true;
+    }
+    return false;
+  }
+
   return (<div className="habit">
     <div className="title" style={{ color }}>
       <div>
@@ -72,22 +82,23 @@ const Habit = (props: { title: string, description: string, category: string, co
           })}
         </div>
       </div>
-      <div className="checkIn" style={{ backgroundColor: color }}>
+      {isCompleted() ? <div className="taskDone" style={{ color }}><div>Great</div><div>Job!</div></div> : <><div className="checkIn" style={{ backgroundColor: color }}>
         <svg className="desktopCheck" width="50" height="44" viewBox="0 0 50 44" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M3 24.2L17.6667 39L47 2" stroke="#F4F4F4" strokeWidth="6" />
         </svg>
       </div>
-      <div className="mobileCheck">
-        <svg width="60" height="60" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <rect x="0.5" y="0.5" width="59" height="59" rx="29.5" fill={color} stroke="black" />
-          <mask id="mask0" mask-type="alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="60" height="60">
+        <div className="mobileCheck">
+          <svg width="60" height="60" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
             <rect x="0.5" y="0.5" width="59" height="59" rx="29.5" fill={color} stroke="black" />
-          </mask>
-          <g mask="url(#mask0)">
-            <path d="M8 31.2L25.3333 46L60 9" stroke="#F4F4F4" strokeWidth="6" />
-          </g>
-        </svg>
-      </div>
+            <mask id="mask0" mask-type="alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="60" height="60">
+              <rect x="0.5" y="0.5" width="59" height="59" rx="29.5" fill={color} stroke="black" />
+            </mask>
+            <g mask="url(#mask0)">
+              <path d="M8 31.2L25.3333 46L60 9" stroke="#F4F4F4" strokeWidth="6" />
+            </g>
+          </svg>
+        </div>
+      </>}
     </div>
   </div>);
 }
