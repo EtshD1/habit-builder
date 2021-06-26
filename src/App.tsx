@@ -22,11 +22,9 @@ import Context from "./context";
 firebase.initializeApp(config);
 
 const auth = firebase.auth();
-// const firestore = firebase.firestore();
 
 const getTheme = () => {
   const value = window.localStorage.getItem("theme");
-  console.log(value);
   if (value === "light") {
     return false;
   }
