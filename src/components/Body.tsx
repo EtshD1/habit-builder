@@ -4,7 +4,7 @@ import firebase from "firebase";
 import { useEffect, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { storeType } from "../redux/reducers";
-import { addHabit } from "../redux/actions";
+import { addHabit, removeHabit } from "../redux/actions";
 import categories from "../categories";
 import { dateOfCompletion } from "../redux/type";
 
@@ -36,6 +36,8 @@ const getWeekDates = () => {
 const Habit = (props: { title: string, description: string, category: string, completed: Array<dateOfCompletion>, id: string }) => {
   const { title, description, category, completed, id } = props;
 
+  const dispatcher = useDispatch();
+
   const docRef = firebase.firestore().collection("habits").doc(id);
 
   const weekDates = getWeekDates();
@@ -61,11 +63,10 @@ const Habit = (props: { title: string, description: string, category: string, co
         year: today.getFullYear()
       })
     });
-
   }
 
-  const deleteDoc = () => {
-    docRef.delete();
+  const deleteDoc = async () => {
+    docRef.delete().then(() => dispatcher(removeHabit(id)));
   }
 
   return (<div className="habit">

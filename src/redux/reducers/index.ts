@@ -15,19 +15,9 @@ const habitsReducer = (state: Array<habit> = [], action: HabitActionType) => {
         }
       } else console.warn("Payload supplied incorrectly\n");
       return [...state];
-    case habitDispatches.CHECKIN:
-      const newState = [...state];
-      if (typeof action.payload == "number") {
-        const today = new Date();
-        newState[action.payload].completed.push({
-          day: today.getDate(),
-          month: today.getMonth(),
-          year: today.getFullYear()
-        });
-      } else {
-        console.warn("Payload supplied incorrectly\n");
-      }
-      return newState;
+    case habitDispatches.DELETE:
+      const foundHabit = state.findIndex(i => i.id === action.payload);
+      return [...state.slice(0, foundHabit), ...state.slice(foundHabit + 1)];
   }
   return state;
 }

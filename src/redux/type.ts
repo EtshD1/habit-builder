@@ -16,7 +16,7 @@ export type dateOfCompletion = {
 
 export type HabitActionType = {
   type: string,
-  payload?: habit | number,
+  payload: habit | string,
 }
 
 export type UserActionType = {
@@ -26,7 +26,7 @@ export type UserActionType = {
 
 export const habitDispatches = {
   ADD: "ADD",
-  CHECKIN: "CHECKIN"
+  DELETE: "DELETE"
 }
 
 export const userDispatches = {

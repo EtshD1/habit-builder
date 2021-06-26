@@ -6,9 +6,9 @@ export const addHabit = (newHabit: habit): HabitActionType => ({
   payload: newHabit
 });
 
-export const checkIn = (index: number): HabitActionType => ({
-  type: habitDispatches.CHECKIN,
-  payload: index
+export const removeHabit = (id: string): HabitActionType => ({
+  type: habitDispatches.DELETE,
+  payload: id
 });
 
 export const login = (user: firebase.User): UserActionType => ({
@@ -16,6 +16,6 @@ export const login = (user: firebase.User): UserActionType => ({
   payload: user
 });
 
-export const logout = ():UserActionType => ({
+export const logout = (): UserActionType => ({
   type: userDispatches.LOGOUT
 })
