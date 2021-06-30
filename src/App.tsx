@@ -13,8 +13,9 @@ import Form from "./components/AddTaskForm";
 import Authenticate from "./components/Authenticate";
 
 import { login, logout } from "./redux/actions";
+import { storeType } from "./redux/reducers";
 import { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import Context from "./context";
 
@@ -33,22 +34,23 @@ const getTheme = () => {
 const App = () => {
   const [darkTheme, setDarkTheme] = useState(false);
   const [form, showForm] = useState(false);
+  const user = useSelector((state: storeType) => state.user);
 
   const dispatcher = useDispatch();
-
-  const user = auth.currentUser;
 
   useEffect(() => {
     setDarkTheme(getTheme());
   }, []);
 
   useEffect(() => {
-    if (user) {
-      dispatcher(login(user));
-    } else {
-      dispatcher(logout());
-    }
-  }, [user, dispatcher]);
+    auth.onAuthStateChanged(user => {
+      if (user) {
+        dispatcher(login(user));
+      } else {
+        dispatcher(logout());
+      }
+    })
+  }, [dispatcher]);
 
   const signIn = async () => {
     const provider = new firebase.auth.GoogleAuthProvider();
