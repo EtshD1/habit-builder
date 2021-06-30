@@ -28,9 +28,7 @@ const NavElements = ({ changeTheme }: { changeTheme: Function }) => {
           ) : (
             ""
           )}
-          <li>
-            <Authenticate />
-          </li>
+          <Authenticate />
         </li>
       </ul>
     </li>
@@ -61,7 +59,9 @@ const Sidebar = (props: {
     >
       <ul onClick={(e) => e.stopPropagation()}>
         <li onClick={() => changeTheme()}>Theme</li>
-        <Authenticate />
+        <li>
+          <Authenticate />
+        </li>
       </ul>
     </div>
   );
