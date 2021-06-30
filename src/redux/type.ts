@@ -26,7 +26,8 @@ export type UserActionType = {
 
 export const habitDispatches = {
   ADD: "ADD",
-  DELETE: "DELETE"
+  DELETE: "DELETE",
+  CLEAR: "CLEAR"
 }
 
 export const userDispatches = {

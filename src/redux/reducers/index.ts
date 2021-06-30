@@ -18,6 +18,8 @@ const habitsReducer = (state: Array<habit> = [], action: HabitActionType) => {
     case habitDispatches.DELETE:
       const foundHabit = state.findIndex(i => i.id === action.payload);
       return [...state.slice(0, foundHabit), ...state.slice(foundHabit + 1)];
+    case habitDispatches.CLEAR:
+      return [];
   }
   return state;
 }

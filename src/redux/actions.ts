@@ -18,4 +18,9 @@ export const login = (user: firebase.User): UserActionType => ({
 
 export const logout = (): UserActionType => ({
   type: userDispatches.LOGOUT
-})
+});
+
+export const clearHabits = (): HabitActionType =>({
+  type: habitDispatches.CLEAR,
+  payload: ""
+});
