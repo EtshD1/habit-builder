@@ -1,11 +1,11 @@
 import "./styles/main.scss";
 import "./styles/reset.css";
 
+import firebase from "firebase/app";
+import config from "./firebase.json";
 import "firebase/firestore";
 import "firebase/auth";
 import "firebase/analytics";
-import config from "./firebase.json";
-import firebase from "firebase/app";
 
 import Navbar from "./components/Navbar";
 import Body from "./components/Body";
@@ -14,7 +14,6 @@ import Authenticate from "./components/Authenticate";
 
 import { login, logout } from "./redux/actions";
 import { useState, useEffect } from "react";
-import { useAuthState } from "react-firebase-hooks/auth";
 import { useDispatch } from "react-redux";
 
 import Context from "./context";
@@ -37,7 +36,7 @@ const App = () => {
 
   const dispatcher = useDispatch();
 
-  const [user] = useAuthState(auth);
+  const user = auth.currentUser;
 
   useEffect(() => {
     setDarkTheme(getTheme());

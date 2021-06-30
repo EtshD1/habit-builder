@@ -1,5 +1,5 @@
 import { HabitActionType, habitDispatches, habit, UserActionType, userDispatches } from "./type";
-import firebase from "firebase";
+import firebase from "firebase/app";
 
 export const addHabit = (newHabit: habit): HabitActionType => ({
   type: habitDispatches.ADD,

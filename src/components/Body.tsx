@@ -1,6 +1,7 @@
 import plusIcon from "./images/plusIcon.svg";
 
-import firebase from "firebase";
+import firebase from "firebase/app";
+import "firebase/firestore"
 import { useEffect, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { storeType } from "../redux/reducers";
