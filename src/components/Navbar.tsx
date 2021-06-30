@@ -28,7 +28,9 @@ const NavElements = ({ changeTheme }: { changeTheme: Function }) => {
           ) : (
             ""
           )}
-          <Authenticate />
+          <li>
+            <Authenticate />
+          </li>
         </li>
       </ul>
     </li>
