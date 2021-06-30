@@ -4,7 +4,7 @@ import firebase from "firebase";
 import { useEffect, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { storeType } from "../redux/reducers";
-import { addHabit, removeHabit } from "../redux/actions";
+import { addHabit, removeHabit, clearHabits } from "../redux/actions";
 import categories from "../categories";
 import { dateOfCompletion } from "../redux/type";
 
@@ -127,33 +127,39 @@ const Habit = (props: { title: string, description: string, category: string, co
 
 const Body = ({ add }: { add: Function }) => {
   const db = useMemo(() => firebase.firestore(), []);
+  const auth = useMemo(() => firebase.auth(), []);
   const dispatcher = useDispatch();
   const habits = useSelector((state: storeType) => state.habits);
 
-  const habitsRef = useMemo(() => {
-    return db
-      .collection("habits")
-      .orderBy("createdAt")
-      .onSnapshot((query) => {
-        query.docs.forEach((item) => {
-          const data = item.data();
-          dispatcher(
-            addHabit({
-              id: item.id,
-              title: data.title,
-              category: data.category,
-              description: data.description,
-              completed: data.completed
-            })
-          );
-        });
-      });
-  }, [db, dispatcher]);
-
   useEffect(() => {
-    return habitsRef;
-  });
+    const isAuth = auth;
+    if (isAuth.currentUser?.uid) {
+      const unsubscribe = db
+        .collection("habits")
+        .orderBy("createdAt")
+        .where("uid", "==", isAuth.currentUser.uid)
+        .onSnapshot((snap) => {
+          snap.docs.forEach((item) => {
+            const data = item.data();
+            console.log(data.uid);
+            dispatcher(
+              addHabit({
+                id: item.id,
+                title: data.title,
+                category: data.category,
+                description: data.description,
+                completed: data.completed,
+              })
+            );
+          });
+        });
 
+      return () => {
+        unsubscribe();
+        dispatcher(clearHabits());
+      };
+    }
+  }, [auth, db, dispatcher]);
   return (
     <div className="body">
       {habits.map((h => {
