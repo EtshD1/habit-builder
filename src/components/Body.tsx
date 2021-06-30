@@ -141,7 +141,6 @@ const Body = ({ add }: { add: Function }) => {
         .onSnapshot((snap) => {
           snap.docs.forEach((item) => {
             const data = item.data();
-            console.log(data.uid);
             dispatcher(
               addHabit({
                 id: item.id,
